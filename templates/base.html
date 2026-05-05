@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Family Vintage</title>
+    
+    <!-- Your compiled Sass -->
+    <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+    
+    <!-- Snipcart and Search scripts will go here later -->
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/"><strong>Family Vintage</strong></a>
+            <!-- A placeholder cart button for Snipcart -->
+            <button class="snipcart-checkout">Cart (0)</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- This is the magic block. Zola will inject other pages right here. -->
+        {% block content %} {% endblock content %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Our Family Vintage Shop</p>
+    </footer>
+</body>
+</html>

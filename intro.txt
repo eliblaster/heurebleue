@@ -1,0 +1,11 @@
+Welcome to Zola!
+Please answer a few questions to get started quickly.
+Any choices made can be changed by modifying the `zola.toml` file later.
+> What is the URL of your site? (https://example.com): https://github.com/eliblaster/heurebleue
+> Do you want to enable Sass compilation? [Y/n]: y
+> Do you want to build a search index of the content? [y/N]: y
+
+Done! Your site was created in /home/eliblaster/heurebleue
+
+Get started by moving into the directory and using the built-in server: `zola serve`
+Visit https://www.getzola.org for the full documentation.
