@@ -19,11 +19,9 @@
             
             <div class="lang-switcher">
                 {% if lang == "en" %}
-                    <a href="/it{{ current_path }}" class="nav-item">🇮🇹 IT</a>
+                    <a href="{{ get_url(path=current_path | default(value="/"), lang="it") }}" class="nav-item">🇮🇹 IT</a>
                 {% else %}
-                    {# Remove the /it prefix for the English version #}
-                    {% set en_path = current_path | replace(from="/it/", to="/") %}
-                    <a href="{{ en_path }}" class="nav-item">🇬🇧 EN</a>
+                    <a href="{{ get_url(path=current_path | default(value="/"), lang="en") }}" class="nav-item">🇬🇧 EN</a>
                 {% endif %}
             </div>
         </nav>

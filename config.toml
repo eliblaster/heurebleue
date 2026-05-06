@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://github.com/eliblaster/heurebleue"
+base_url = "https://eliblaster.github.io/heurebleue/"
 default_language = "en"
 
 # Whether to automatically compile all Sass files in the sass directory
