@@ -6,7 +6,7 @@
     <title>{{ config.title }}</title>
     
     <!-- Your compiled Sass -->
-    <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+    <link rel="stylesheet" href="{{ get_url(path="style.css", cache_bust=true) }}">
 </head>
 <body>
     <div class="ribbon">
@@ -19,9 +19,9 @@
             
             <div class="lang-switcher">
                 {% if lang == "en" %}
-                    <a href="{{ get_url(path=current_path | default(value="/"), lang="it") }}" class="nav-item">🇮🇹 IT</a>
+                    <a href="{{ get_url(path=current_path, lang="it") }}" class="nav-item">🇮🇹 IT</a>
                 {% else %}
-                    <a href="{{ get_url(path=current_path | default(value="/"), lang="en") }}" class="nav-item">🇬🇧 EN</a>
+                    <a href="{{ get_url(path=current_path, lang="en") }}" class="nav-item">🇬🇧 EN</a>
                 {% endif %}
             </div>
         </nav>

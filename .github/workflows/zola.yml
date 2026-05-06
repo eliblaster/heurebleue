@@ -28,7 +28,7 @@ jobs:
           tool: zola@0.19.1
           
       - name: Build Site
-        run: zola build
+        run: zola build --base-url https://eliblaster.github.io/heurebleue/
         
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
