@@ -4,13 +4,11 @@ on:
   push:
     branches: ["main"]
 
-# Grants permissions to push the site to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Prevents multiple builds from running at the exact same time
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -28,7 +26,10 @@ jobs:
           tool: zola@0.19.1
           
       - name: Build Site
-        run: zola build --base-url https://eliblaster.github.io/heurebleue/
+        run: zola build
+        
+      - name: Add .nojekyll
+        run: touch public/.nojekyll
         
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3

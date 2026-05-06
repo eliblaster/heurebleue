@@ -6,7 +6,7 @@
     <title>{{ config.title }}</title>
     
     <!-- Your compiled Sass -->
-    <link rel="stylesheet" href="{{ get_url(path="style.css", cache_bust=true) }}">
+    <link rel="stylesheet" href="{{ config.base_url ~ "style.css" | safe }}{% if config.extra.cache_bust %}?h={{ now() | date(format="%s") }}{% endif %}">
 </head>
 <body>
     <div class="ribbon">
@@ -19,9 +19,9 @@
             
             <div class="lang-switcher">
                 {% if lang == "en" %}
-                    <a href="{{ get_url(path=current_path, lang="it") }}" class="nav-item">🇮🇹 IT</a>
+                    <a href="{{ config.base_url ~ "it" ~ current_path }}" class="nav-item">🇮🇹 IT</a>
                 {% else %}
-                    <a href="{{ get_url(path=current_path, lang="en") }}" class="nav-item">🇬🇧 EN</a>
+                    <a href="{{ config.base_url ~ current_path | replace(from="/it/", to="/") | trim_start_matches(matches="/") }}" class="nav-item">🇬🇧 EN</a>
                 {% endif %}
             </div>
         </nav>
@@ -30,7 +30,7 @@
     <div class="site-wrapper">
         <header>
             <a href="{{ get_url(path="@/_index.md", lang=lang) }}">
-                <img src="{{ get_url(path="HeureBleueLogo.png") }}" alt="Heure Bleue Logo" class="site-logo">
+                <img src="{{ config.base_url ~ "HeureBleueLogo.png" }}" alt="Heure Bleue Logo" class="site-logo">
             </a>
         </header>
 
