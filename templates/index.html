@@ -1,17 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% set current_item = section | default(value=page) %}
 <section class="hero">
-    <!-- 'section.title' pulls data from your Markdown file -->
-    <h1>{{ section.title }}</h1>
-    <p>Curated 90s apparel, historical coinage, and unique collectibles.</p>
+    <h1>{{ current_item.title }}</h1>
+    {{ current_item.content | safe }}
 </section>
 
+{% if section %}
 <section class="latest-arrivals">
     <h2>Featured Items</h2>
     <div class="product-grid">
-        <!-- We will put your Snipcart buy buttons here soon! -->
-        <p>Products coming soon...</p>
+        {% set products_section = get_section(path="products/_index.md") %}
+        {% if products_section.pages %}
+            {% for page in products_section.pages | slice(end=4) %}
+                <div class="product-card">
+                    <a href="{{ page.permalink }}">
+                        <div class="card-image">
+                            {% if page.extra.image %}
+                                <img src="{{ page.extra.image }}" alt="{{ page.title }}">
+                            {% elif page.extra.images %}
+                                <img src="{{ page.extra.images[0] }}" alt="{{ page.title }}">
+                            {% else %}
+                                <div class="placeholder">No Image</div>
+                            {% endif %}
+                        </div>
+                        <h3>{{ page.title }}</h3>
+                        <p class="card-price">${{ page.extra.price }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Products coming soon...</p>
+        {% endif %}
     </div>
 </section>
+{% endif %}
 {% endblock content %}

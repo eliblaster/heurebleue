@@ -11,21 +11,31 @@
     <!-- Snipcart and Search scripts will go here later -->
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/"><strong>Family Vintage</strong></a>
-            <!-- A placeholder cart button for Snipcart -->
-            <button class="snipcart-checkout">Cart (0)</button>
+    <div class="ribbon">
+        <nav class="ribbon-nav">
+            <a href="/" class="nav-item">Home</a>
+            <a href="/products" class="nav-item">Shop</a>
+            <a href="/about" class="nav-item">About</a>
+            <a href="/account" class="nav-item">Account</a>
+            <button class="snipcart-checkout nav-item">Cart (0)</button>
         </nav>
-    </header>
+    </div>
+    
+    <div class="site-wrapper">
+        <header>
+            <a href="/">
+                <img src="{{ get_url(path="HeureBleueLogo.png") }}" alt="Heure Bleue Logo" class="site-logo">
+            </a>
+        </header>
 
-    <main>
-        <!-- This is the magic block. Zola will inject other pages right here. -->
-        {% block content %} {% endblock content %}
-    </main>
+        <main>
+            <!-- This is the magic block. Zola will inject other pages right here. -->
+            {% block content %} {% endblock content %}
+        </main>
 
-    <footer>
-        <p>&copy; 2026 Our Family Vintage Shop</p>
-    </footer>
+        <footer>
+            <p>&copy; 2026 Our Family Vintage Shop</p>
+        </footer>
+    </div>
 </body>
 </html>

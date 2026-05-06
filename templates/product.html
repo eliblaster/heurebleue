@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <article class="product-page">
+        <div class="product-gallery">
+            <div class="image-slider">
+                {% if page.extra.images %}
+                    {% for img in page.extra.images %}
+                        <div class="slide" id="slide-{{ loop.index }}">
+                            <img src="{{ img }}" alt="{{ page.title }} - Image {{ loop.index }}">
+                        </div>
+                    {% endfor %}
+                {% elif page.extra.image %}
+                    <div class="slide" id="slide-1">
+                        <img src="{{ page.extra.image }}" alt="{{ page.title }}">
+                    </div>
+                {% else %}
+                    <div class="placeholder-image">No Image Available</div>
+                {% endif %}
+            </div>
+            
+            {% if page.extra.images and page.extra.images | length > 1 %}
+                <div class="slider-nav">
+                    {% for img in page.extra.images %}
+                        <a href="#slide-{{ loop.index }}"></a>
+                    {% endfor %}
+                </div>
+                <div class="slider-arrows">
+                    <button class="arrow prev" onclick="document.querySelector('.image-slider').scrollBy({left: -300, behavior: 'smooth'})">❮</button>
+                    <button class="arrow next" onclick="document.querySelector('.image-slider').scrollBy({left: 300, behavior: 'smooth'})">❯</button>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="product-details">
+            <h1>{{ page.title }}</h1>
+            <p class="price">${{ page.extra.price }}</p>
+            
+            <div class="description">
+                {{ page.content | safe }}
+            </div>
+
+            <button class="snipcart-add-item"
+                data-item-id="{{ page.slug }}"
+                data-item-price="{{ page.extra.price }}"
+                data-item-url="{{ page.permalink }}"
+                data-item-description="{{ page.description | default(value="A unique vintage find.") }}"
+                data-item-image="{{ page.extra.image | default(value=page.extra.images[0]) }}"
+                data-item-name="{{ page.title }}">
+                Add to Cart
+            </button>
+            
+            <a href="/" class="back-link">← Back to Shop</a>
+        </div>
+    </article>
+</div>
+{% endblock content %}
