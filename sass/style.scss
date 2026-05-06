@@ -5,6 +5,10 @@ $color-accent-gold: #A29161; /* Golden brown */
 $color-accent-tan: #CDBA98;  /* Muted tan */
 $color-accent-deep: #917658; /* Rich brown */
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: system-ui, -apple-system, sans-serif;
     line-height: 1.6;
@@ -24,52 +28,85 @@ body {
     background: $color-text-main;
     color: $color-bg-light;
     z-index: 100;
+    position: sticky;
+    top: 0;
+    width: 100%;
 
     .ribbon-nav {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 1.5rem;
+        gap: 0.75rem;
         padding: 0.75rem;
+        flex-wrap: wrap;
 
         .nav-item {
             color: $color-bg-light;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 0;
+            padding: 0.25rem 0;
             font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
 
             &:hover { color: $color-accent-tan; }
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            padding-left: 0.75rem;
+            margin-left: 0.25rem;
         }
     }
 
     @media (min-width: 769px) {
-        width: 60px;
+        width: 70px;
         height: 100vh;
-        position: sticky;
-        top: 0;
+        overflow-y: auto; /* Allows scrolling if navigation is too long for screen */
+        flex-shrink: 0;
 
         .ribbon-nav {
             flex-direction: column;
-            height: 100%;
+            flex-wrap: nowrap;
+            min-height: 100%;
             padding: 2rem 0;
-            
+            justify-content: flex-start; /* Items start at top */
+
             .nav-item {
                 writing-mode: vertical-rl;
                 text-orientation: mixed;
                 transform: rotate(180deg);
                 margin: 1rem 0;
             }
+
+            .lang-switcher {
+                border-left: none;
+                border-top: 1px solid rgba(255,255,255,0.3);
+                padding-left: 0;
+                padding-top: 1.5rem;
+                margin-left: 0;
+                margin-top: 2rem;
+                flex-direction: column;
+
+                .nav-item {
+                    writing-mode: vertical-rl;
+                    text-orientation: mixed;
+                    transform: rotate(180deg);
+                }
+            }
         }
     }
 }
-
 .site-wrapper {
     flex: 1;
     display: flex;
@@ -180,6 +217,7 @@ header {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                    display: block; /* Removes the bottom alignment gap */
                 }
             }
         }
@@ -265,11 +303,22 @@ header {
         }
 
         .back-link {
-            display: inline-block;
-            margin-top: 2rem;
-            color: $color-accent-deep;
+            display: block;
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            text-align: center;
             text-decoration: none;
-            &:hover { color: $color-text-main; }
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            border: 2px solid $color-text-main;
+            color: $color-text-main;
+            transition: all 0.2s;
+
+            &:hover { 
+                background: $color-text-main;
+                color: $color-bg-light;
+            }
         }
     }
 }

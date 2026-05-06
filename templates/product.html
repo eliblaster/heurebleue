@@ -48,10 +48,10 @@
                 data-item-description="{{ page.description | default(value="A unique vintage find.") }}"
                 data-item-image="{{ page.extra.image | default(value=page.extra.images[0]) }}"
                 data-item-name="{{ page.title }}">
-                Add to Cart
+                {{ trans(key="add_to_cart", lang=lang) }}
             </button>
             
-            <a href="/" class="back-link">← Back to Shop</a>
+            <a href="{{ get_url(path="products/_index.md", lang=lang) }}" class="back-link">{{ trans(key="back_to_shop", lang=lang) }}</a>
         </div>
     </article>
 </div>

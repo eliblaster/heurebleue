@@ -1,11 +1,41 @@
 # The URL the site will be built for
 base_url = "https://github.com/eliblaster/heurebleue"
+default_language = "en"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
+
+[languages.it]
+title = "Heure Bleue"
+description = "Curata selezione di abbigliamento anni '90 e collezionismo."
+generate_feeds = true
+
+[translations]
+home = "Home"
+shop = "Shop"
+about = "About"
+account = "Account"
+cart = "Cart"
+featured_items = "Featured Items"
+products_soon = "Products coming soon..."
+back_to_shop = "← Back to Shop"
+add_to_cart = "Add to Cart"
+shipping_notice = "✨ Free shipping on all vintage orders over $100! ✨"
+
+[languages.it.translations]
+home = "Home"
+shop = "Negozio"
+about = "Chi Siamo"
+account = "Account"
+cart = "Carrello"
+featured_items = "Articoli in Primo Piano"
+products_soon = "Prodotti in arrivo..."
+back_to_shop = "← Torna al Negozio"
+add_to_cart = "Aggiungi al carrello"
+shipping_notice = "✨ Spedizione gratuita su ordini vintage oltre i 100€! ✨"
 
 [markdown]
 

@@ -1,40 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Family Vintage</title>
+    <title>{{ config.title }}</title>
     
     <!-- Your compiled Sass -->
     <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
-    
-    <!-- Snipcart and Search scripts will go here later -->
 </head>
 <body>
     <div class="ribbon">
         <nav class="ribbon-nav">
-            <a href="/" class="nav-item">Home</a>
-            <a href="/products" class="nav-item">Shop</a>
-            <a href="/about" class="nav-item">About</a>
-            <a href="/account" class="nav-item">Account</a>
-            <button class="snipcart-checkout nav-item">Cart (0)</button>
+            <a href="{{ get_url(path="@/_index.md", lang=lang) }}" class="nav-item">{{ trans(key="home", lang=lang) }}</a>
+            <a href="{{ get_url(path="@/products/_index.md", lang=lang) }}" class="nav-item">{{ trans(key="shop", lang=lang) }}</a>
+            <a href="{{ get_url(path="@/about.md", lang=lang) }}" class="nav-item">{{ trans(key="about", lang=lang) }}</a>
+            <a href="#" class="nav-item">{{ trans(key="account", lang=lang) }}</a>
+            <button class="snipcart-checkout nav-item">{{ trans(key="cart", lang=lang) }} (0)</button>
+            
+            <div class="lang-switcher">
+                {% if lang == "en" %}
+                    <a href="/it{{ current_path }}" class="nav-item">🇮🇹 IT</a>
+                {% else %}
+                    {# Remove the /it prefix for the English version #}
+                    {% set en_path = current_path | replace(from="/it/", to="/") %}
+                    <a href="{{ en_path }}" class="nav-item">🇬🇧 EN</a>
+                {% endif %}
+            </div>
         </nav>
     </div>
     
     <div class="site-wrapper">
         <header>
-            <a href="/">
+            <a href="{{ get_url(path="@/_index.md", lang=lang) }}">
                 <img src="{{ get_url(path="HeureBleueLogo.png") }}" alt="Heure Bleue Logo" class="site-logo">
             </a>
         </header>
 
         <main>
-            <!-- This is the magic block. Zola will inject other pages right here. -->
             {% block content %} {% endblock content %}
         </main>
 
         <footer>
-            <p>&copy; 2026 Our Family Vintage Shop</p>
+            <p>&copy; 2026 Heure Bleue Shop</p>
         </footer>
     </div>
 </body>
