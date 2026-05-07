@@ -5,32 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config.title }}</title>
     
-    <!-- Language Redirection -->
+    <!-- Language Redirection & Preference -->
     <script>
         (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langArg = urlParams.get('lang');
+            if (langArg) {
+                localStorage.setItem('heurebleue_lang', langArg);
+            }
+
             const prefLang = localStorage.getItem('heurebleue_lang');
             const path = window.location.pathname;
             const base = "{{ config.base_url | split(pat="://") | last | split(pat="/") | slice(start=1) | join(pat="/") | trim_end_matches(pat="/") }}";
             const rootPath = base ? '/' + base + '/' : '/';
             
-            // Redirect to /it/ if in Italy and no preference is set, only from the root
-            if ((path === rootPath || path === rootPath + 'index.html') && !prefLang) {
+            // Redirect logic
+            if ((path === rootPath || path === rootPath + 'index.html') && !prefLang && !langArg) {
                 const isItaly = Intl.DateTimeFormat().resolvedOptions().timeZone.includes('Rome') || 
                                navigator.language.startsWith('it');
                 if (isItaly) {
-                    window.location.href = window.location.origin + rootPath + 'it/';
+                    window.location.href = window.location.origin + rootPath + 'it/?lang=it';
                 }
             }
-            
-            // Store preference when manually switching
-            window.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('.lang-switcher a').forEach(el => {
-                    el.addEventListener('click', (e) => {
-                        const lang = e.currentTarget.textContent.includes('🇮🇹') ? 'it' : 'en';
-                        localStorage.setItem('heurebleue_lang', lang);
-                    });
-                });
-            });
         })();
     </script>
     
@@ -56,10 +52,10 @@
             <div class="lang-switcher">
                 {% set base_url_trimmed = config.base_url | trim_end_matches(pat="/") %}
                 {% if lang == "en" %}
-                    <a href="{{ base_url_trimmed }}/it/{{ current_path | trim_start_matches(pat="/") }}" class="nav-item">🇮🇹</a>
+                    <a href="{{ base_url_trimmed }}/it/{{ current_path | trim_start_matches(pat="/") }}?lang=it" class="nav-item">🇮🇹</a>
                 {% else %}
                     {% set en_path = current_path | replace(from="/it/", to="/") | trim_start_matches(pat="/") %}
-                    <a href="{{ base_url_trimmed }}/{{ en_path }}" class="nav-item">🇬🇧</a>
+                    <a href="{{ base_url_trimmed }}/{{ en_path }}?lang=en" class="nav-item">🇬🇧</a>
                 {% endif %}
             </div>
         </nav>
