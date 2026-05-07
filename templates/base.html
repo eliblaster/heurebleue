@@ -10,23 +10,35 @@
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
             const langArg = urlParams.get('lang');
+            
             if (langArg) {
                 localStorage.setItem('heurebleue_lang', langArg);
+                return;
             }
 
-            const prefLang = localStorage.getItem('heurebleue_lang');
             const path = window.location.pathname;
             const base = "{{ config.base_url | split(pat="://") | last | split(pat="/") | slice(start=1) | join(pat="/") | trim_end_matches(pat="/") }}";
             const rootPath = base ? '/' + base + '/' : '/';
+            const isAtRoot = (path === rootPath || path === rootPath + 'index.html');
+
+            const prefLang = localStorage.getItem('heurebleue_lang');
             
-            // Redirect logic
-            if ((path === rootPath || path === rootPath + 'index.html') && !prefLang && !langArg) {
+            // 1. Regional redirection for the root page
+            if (isAtRoot && !prefLang) {
                 const isItaly = Intl.DateTimeFormat().resolvedOptions().timeZone.includes('Rome') || 
                                navigator.language.startsWith('it');
-                if (isItaly) {
-                    window.location.href = window.location.origin + rootPath + 'it/?lang=it';
+                const target = isItaly ? 'it' : 'en';
+                if (target === 'it') {
+                    window.location.replace(window.location.origin + rootPath + 'it/?lang=it');
+                    return;
                 }
             }
+
+            // 2. Enforce the ?lang argument based on current path/preference
+            const currentLang = path.includes('/it/') ? 'it' : 'en';
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', currentLang);
+            window.location.replace(url.toString());
         })();
     </script>
     
