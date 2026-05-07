@@ -26,7 +26,7 @@
             
             <div class="lang-switcher">
                 {% if lang == "en" %}
-                    <a href="{{ config.base_url ~ "it" ~ current_path }}" class="nav-item">🇮🇹</a>
+                    <a href="{{ config.base_url ~ "it/" ~ current_path | trim_start_matches(pat="/") }}" class="nav-item">🇮🇹</a>
                 {% else %}
                     <a href="{{ config.base_url ~ current_path | replace(from="/it/", to="/") | trim_start_matches(pat="/") }}" class="nav-item">🇬🇧</a>
                 {% endif %}
