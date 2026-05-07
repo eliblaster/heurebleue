@@ -96,12 +96,17 @@ body {
                 padding-top: 1.5rem;
                 margin-left: 0;
                 margin-top: 2rem;
+                display: flex;
                 flex-direction: column;
+                align-items: center;
 
                 .nav-item {
-                    writing-mode: vertical-rl;
-                    text-orientation: mixed;
-                    transform: rotate(180deg);
+                    writing-mode: horizontal-tb;
+                    text-orientation: initial;
+                    transform: none;
+                    font-size: 1.25rem; /* Larger emoji for easier clicking */
+                    padding: 0.5rem 0;
+                    justify-content: center;
                 }
             }
         }
@@ -123,7 +128,8 @@ header {
     
     .site-logo {
         width: 100%;
-        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
         display: block;
     }
 }
@@ -377,4 +383,59 @@ footer {
     padding: 2rem;
     color: $color-accent-deep;
     font-size: 0.9rem;
+}
+
+/* Snipcart Theme Customization */
+#snipcart {
+    /* Global Colors */
+    --color-primary: #{$color-text-main};
+    --color-secondary: #{$color-accent-deep};
+    --color-link: #{$color-accent-deep};
+    --color-default: #{$color-text-main};
+    --bgColor-default: #{$color-bg-light};
+    --color-error: #8b0000;
+    --color-success: #556b2f;
+
+    /* Button Primary */
+    --color-buttonPrimary: #{$color-bg-light};
+    --bgColor-buttonPrimary: #{$color-text-main};
+    --bgColor-buttonPrimary-hover: #{$color-accent-deep};
+    --bgColor-buttonPrimary-active: #{$color-accent-deep};
+    --borderColor-buttonPrimary: #{$color-text-main};
+
+    /* Button Secondary */
+    --color-buttonSecondary: #{$color-text-main};
+    --bgColor-buttonSecondary: #{$color-accent-tan};
+    --bgColor-buttonSecondary-hover: #{$color-accent-gold};
+    --borderColor-buttonSecondary: #{$color-accent-tan};
+
+    /* Inputs */
+    --color-input: #{$color-text-main};
+    --bgColor-input: #fff;
+    --borderColor-input: #{$color-accent-tan};
+    --borderColor-input-focus: #{$color-text-main};
+    --color-input-placeholder: #{$color-accent-deep};
+
+    /* Typography */
+    --font-family: "system-ui", "-apple-system", "sans-serif";
+
+    /* Various UI elements */
+    --color-badge-bg: #{$color-accent-gold};
+    --color-badge-text: #{$color-bg-light};
+    --color-icon: #{$color-text-main};
+    
+    /* Layout & Borders */
+    --border-radius: 4px;
+    --shadow-default: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    /* Specific Snipcart components overrides */
+    --color-line-light: rgba(0, 0, 0, 0.1);
+
+    /* Remove the arrow icon from the back to shopping link */
+    .snipcart-modal__close-icon {
+        display: none !important;
+    }
+    .snipcart-modal__close-title {
+        margin-left: 0 !important;
+    }
 }

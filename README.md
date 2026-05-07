@@ -16,7 +16,7 @@ Heure Bleue is a curated, bilingual vintage shop built with the [Zola](https://w
 - **SSG**: [Zola](https://www.getzola.org/)
 - **Styling**: Sass (SCSS) with a custom neutral palette.
 - **Deployment**: GitHub Actions & GitHub Pages.
-- **E-commerce**: [Snipcart](https://snipcart.com/) (integration in progress).
+- **E-commerce**: [Snipcart](https://snipcart.com/) (Fully integrated).
 
 ## 🚀 Getting Started
 

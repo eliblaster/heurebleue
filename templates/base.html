@@ -7,32 +7,41 @@
     
     <!-- Your compiled Sass -->
     <link rel="stylesheet" href="{{ config.base_url ~ "style.css" | safe }}{% if config.extra.cache_bust %}?h={{ now() | date(format="%s") }}{% endif %}">
+    
+    <!-- Snipcart -->
+    <link rel="preconnect" href="https://app.snipcart.com">
+    <link rel="preconnect" href="https://cdn.snipcart.com">
+    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.4.0/default/snipcart.css" />
 </head>
 <body>
     <div class="ribbon">
         <nav class="ribbon-nav">
             <a href="{{ get_url(path="@/_index.md", lang=lang) }}" class="nav-item">{{ trans(key="home", lang=lang) }}</a>
             <a href="{{ get_url(path="@/products/_index.md", lang=lang) }}" class="nav-item">{{ trans(key="shop", lang=lang) }}</a>
+            <button class="snipcart-checkout nav-item">
+                {{ trans(key="cart", lang=lang) }} (<span class="snipcart-items-count">0</span>) - <span class="snipcart-total-price">$0.00</span>
+            </button>
+            <button class="snipcart-customer-signin nav-item">{{ trans(key="account", lang=lang) }}</button>
             <a href="{{ get_url(path="@/about.md", lang=lang) }}" class="nav-item">{{ trans(key="about", lang=lang) }}</a>
-            <a href="#" class="nav-item">{{ trans(key="account", lang=lang) }}</a>
-            <button class="snipcart-checkout nav-item">{{ trans(key="cart", lang=lang) }} (0)</button>
             
             <div class="lang-switcher">
                 {% if lang == "en" %}
-                    <a href="{{ config.base_url ~ "it" ~ current_path }}" class="nav-item">🇮🇹 IT</a>
+                    <a href="{{ config.base_url ~ "it" ~ current_path }}" class="nav-item">🇮🇹</a>
                 {% else %}
-                    <a href="{{ config.base_url ~ current_path | replace(from="/it/", to="/") | trim_start_matches(pat="/") }}" class="nav-item">🇬🇧 EN</a>
+                    <a href="{{ config.base_url ~ current_path | replace(from="/it/", to="/") | trim_start_matches(pat="/") }}" class="nav-item">🇬🇧</a>
                 {% endif %}
             </div>
         </nav>
     </div>
     
     <div class="site-wrapper">
+        {% if not current_path is starting_with("/products/") and not current_path is starting_with("/it/products/") %}
         <header>
             <a href="{{ get_url(path="@/_index.md", lang=lang) }}">
                 <img src="{{ config.base_url ~ "HeureBleueLogo.png" }}" alt="Heure Bleue Logo" class="site-logo">
             </a>
         </header>
+        {% endif %}
 
         <main>
             {% block content %} {% endblock content %}
@@ -42,5 +51,8 @@
             <p>&copy; 2026 Heure Bleue Shop</p>
         </footer>
     </div>
+
+    <script async src="https://cdn.snipcart.com/themes/v3.4.0/default/snipcart.js"></script>
+    <div hidden id="snipcart" data-api-key="{{ config.extra.snipcart_api_key }}" data-config-modal-style="side"></div>
 </body>
 </html>

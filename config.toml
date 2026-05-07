@@ -21,7 +21,7 @@ account = "Account"
 cart = "Cart"
 featured_items = "Featured Items"
 products_soon = "Products coming soon..."
-back_to_shop = "← Back to Shop"
+back_to_shop = "Back to Shop"
 add_to_cart = "Add to Cart"
 shipping_notice = "✨ Free shipping on all vintage orders over $100! ✨"
 
@@ -33,7 +33,7 @@ account = "Account"
 cart = "Carrello"
 featured_items = "Articoli in Primo Piano"
 products_soon = "Prodotti in arrivo..."
-back_to_shop = "← Torna al Negozio"
+back_to_shop = "Torna al Negozio"
 add_to_cart = "Aggiungi al carrello"
 shipping_notice = "✨ Spedizione gratuita su ordini vintage oltre i 100€! ✨"
 
@@ -44,3 +44,4 @@ theme = "catppuccin-mocha"
 
 [extra]
 # Put all your custom variables here
+snipcart_api_key = "MWVkZDYzNzUtMDNkYS00YjljLTk3YmQtMDg5OWFjZGUxNzhkNjM5MTM2Njg2MzM2ODA2NzQ2"
