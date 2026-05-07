@@ -35,7 +35,7 @@
         
         <div class="product-details">
             <h1>{{ page.title }}</h1>
-            <p class="price">${{ page.extra.price }}</p>
+            <p class="price"><span class="price-val" data-base-price="{{ page.extra.price }}">{{ page.extra.price }}</span>€</p>
             
             <div class="description">
                 {{ page.content | safe }}
@@ -45,7 +45,7 @@
                 data-item-id="{{ page.slug }}"
                 data-item-price="{{ page.extra.price }}"
                 data-item-url="{{ page.permalink }}"
-                data-item-description="{{ page.description | default(value="A unique vintage find.") }}"
+                data-item-description="{{ page.content | striptags | trim | truncate(length=160) }}"
                 data-item-image="{{ page.extra.image | default(value=page.extra.images[0]) }}"
                 data-item-name="{{ page.title }}">
                 {{ trans(key="add_to_cart", lang=lang) }}

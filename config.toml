@@ -23,7 +23,7 @@ featured_items = "Featured Items"
 products_soon = "Products coming soon..."
 back_to_shop = "Back to Shop"
 add_to_cart = "Add to Cart"
-shipping_notice = "✨ Free shipping on all vintage orders over $100! ✨"
+shipping_notice = "✨ Free shipping on all vintage orders over 100€! ✨"
 
 [languages.it.translations]
 home = "Home"

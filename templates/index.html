@@ -32,7 +32,7 @@
                             {% endif %}
                         </div>
                         <h3>{{ page.title }}</h3>
-                        <p class="card-price">${{ page.extra.price }}</p>
+                        <p class="card-price"><span class="price-val" data-base-price="{{ page.extra.price }}">{{ page.extra.price }}</span>€</p>
                     </a>
                 </div>
             {% endfor %}

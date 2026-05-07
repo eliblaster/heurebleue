@@ -8,37 +8,35 @@
     <!-- Language Redirection & Preference -->
     <script>
         (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const langArg = urlParams.get('lang');
-            
-            if (langArg) {
-                localStorage.setItem('heurebleue_lang', langArg);
-                return;
-            }
-
             const path = window.location.pathname;
             const base = "{{ config.base_url | split(pat="://") | last | split(pat="/") | slice(start=1) | join(pat="/") | trim_end_matches(pat="/") }}";
             const rootPath = base ? '/' + base + '/' : '/';
+            const itPath = rootPath + 'it/';
             const isAtRoot = (path === rootPath || path === rootPath + 'index.html');
+            const isAtItRoot = (path === itPath || path === itPath + 'index.html');
 
             const prefLang = localStorage.getItem('heurebleue_lang');
-            
-            // 1. Regional redirection for the root page
+            const currentLang = path.includes('/it/') ? 'it' : 'en';
+
+            // 1. Regional redirection (Italy -> IT) for first-time visitors at root
             if (isAtRoot && !prefLang) {
                 const isItaly = Intl.DateTimeFormat().resolvedOptions().timeZone.includes('Rome') || 
                                navigator.language.startsWith('it');
-                const target = isItaly ? 'it' : 'en';
-                if (target === 'it') {
-                    window.location.replace(window.location.origin + rootPath + 'it/?lang=it');
+                if (isItaly) {
+                    window.location.replace(window.location.origin + itPath);
                     return;
                 }
             }
 
-            // 2. Enforce the ?lang argument based on current path/preference
-            const currentLang = path.includes('/it/') ? 'it' : 'en';
-            const url = new URL(window.location.href);
-            url.searchParams.set('lang', currentLang);
-            window.location.replace(url.toString());
+            // 2. Capture preference when flags are clicked
+            window.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.lang-switcher a').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const lang = e.currentTarget.textContent.includes('🇮🇹') ? 'it' : 'en';
+                        localStorage.setItem('heurebleue_lang', lang);
+                    });
+                });
+            });
         })();
     </script>
     
@@ -56,7 +54,7 @@
             <a href="{{ get_url(path="@/_index.md", lang=lang) }}" class="nav-item">{{ trans(key="home", lang=lang) }}</a>
             <a href="{{ get_url(path="@/products/_index.md", lang=lang) }}" class="nav-item">{{ trans(key="shop", lang=lang) }}</a>
             <button class="snipcart-checkout nav-item">
-                {{ trans(key="cart", lang=lang) }} (<span class="snipcart-items-count">0</span>) - <span class="snipcart-total-price">$0.00</span>
+                {{ trans(key="cart", lang=lang) }} (<span class="snipcart-items-count">0</span>) - <span class="snipcart-total-price">0.00€</span>
             </button>
             <button class="snipcart-customer-signin nav-item">{{ trans(key="account", lang=lang) }}</button>
             <a href="{{ get_url(path="@/about.md", lang=lang) }}" class="nav-item">{{ trans(key="about", lang=lang) }}</a>
@@ -64,14 +62,84 @@
             <div class="lang-switcher">
                 {% set base_url_trimmed = config.base_url | trim_end_matches(pat="/") %}
                 {% if lang == "en" %}
-                    <a href="{{ base_url_trimmed }}/it/{{ current_path | trim_start_matches(pat="/") }}?lang=it" class="nav-item">🇮🇹</a>
+                    <a href="{{ base_url_trimmed }}/it/{{ current_path | trim_start_matches(pat="/") }}" class="nav-item">🇮🇹</a>
                 {% else %}
                     {% set en_path = current_path | replace(from="/it/", to="/") | trim_start_matches(pat="/") %}
-                    <a href="{{ base_url_trimmed }}/{{ en_path }}?lang=en" class="nav-item">🇬🇧</a>
+                    <a href="{{ base_url_trimmed }}/{{ en_path }}" class="nav-item">🇬🇧</a>
                 {% endif %}
+            </div>
+
+            <div class="currency-switcher">
+                <button class="nav-item currency-btn" data-currency="EUR">€</button>
+                <button class="nav-item currency-btn" data-currency="USD">$</button>
             </div>
         </nav>
     </div>
+
+    <!-- Currency Conversion Script -->
+    <script>
+        (function() {
+            const exchangeRateUrl = 'https://api.exchangerate-api.com/v4/latest/EUR';
+            let exchangeRate = 1.1; // Default fallback
+
+            async function fetchRate() {
+                try {
+                    const response = await fetch(exchangeRateUrl);
+                    const data = await response.json();
+                    exchangeRate = data.rates.USD;
+                    console.log("Exchange rate EUR -> USD:", exchangeRate);
+                } catch (e) {
+                    console.error("Failed to fetch exchange rate", e);
+                }
+            }
+
+            function updatePrices(currency) {
+                const symbol = currency === 'USD' ? '$' : '€';
+                document.querySelectorAll('.price-val').forEach(el => {
+                    const basePrice = parseFloat(el.getAttribute('data-base-price'));
+                    if (currency === 'USD') {
+                        el.textContent = (basePrice * exchangeRate).toFixed(2);
+                        if (el.nextSibling && el.nextSibling.nodeType === 3) {
+                            el.nextSibling.textContent = '$';
+                        }
+                    } else {
+                        el.textContent = basePrice.toFixed(2);
+                        if (el.nextSibling && el.nextSibling.nodeType === 3) {
+                            el.nextSibling.textContent = '€';
+                        }
+                    }
+                });
+                
+                // Sync with Snipcart
+                if (window.Snipcart) {
+                    Snipcart.api.cart.setCurrency(currency.toLowerCase());
+                }
+            }
+
+            window.addEventListener('DOMContentLoaded', async () => {
+                await fetchRate();
+                const savedCurrency = localStorage.getItem('heurebleue_currency') || 'EUR';
+                
+                document.querySelectorAll('.currency-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const curr = btn.getAttribute('data-currency');
+                        localStorage.setItem('heurebleue_currency', curr);
+                        updatePrices(curr);
+                    });
+                });
+
+                // Listen for Snipcart readiness to sync currency
+                document.addEventListener('snipcart.ready', () => {
+                    const current = localStorage.getItem('heurebleue_currency') || 'EUR';
+                    Snipcart.api.cart.setCurrency(current.toLowerCase());
+                });
+
+                if (savedCurrency === 'USD') {
+                    updatePrices('USD');
+                }
+            });
+        })();
+    </script>
     
     <div class="site-wrapper">
         {% if not current_path is starting_with("/products/") and not current_path is starting_with("/it/products/") %}
