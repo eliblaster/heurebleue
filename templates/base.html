@@ -68,11 +68,6 @@
                     <a href="{{ base_url_trimmed }}/{{ en_path }}" class="nav-item">🇬🇧</a>
                 {% endif %}
             </div>
-
-            <div class="currency-switcher">
-                <button class="nav-item currency-btn" data-currency="EUR">€</button>
-                <button class="nav-item currency-btn" data-currency="USD">$</button>
-            </div>
         </nav>
     </div>
 
@@ -80,62 +75,71 @@
     <script>
         (function() {
             const exchangeRateUrl = 'https://api.exchangerate-api.com/v4/latest/EUR';
-            let exchangeRate = 1.1; // Default fallback
+            let exchangeRates = { USD: 1.1, GBP: 0.85, CNY: 7.8 }; // Fallback defaults
 
-            async function fetchRate() {
+            async function fetchRates() {
                 try {
                     const response = await fetch(exchangeRateUrl);
                     const data = await response.json();
-                    exchangeRate = data.rates.USD;
-                    console.log("Exchange rate EUR -> USD:", exchangeRate);
+                    exchangeRates = data.rates;
+                    console.log("Exchange rates updated from EUR base");
                 } catch (e) {
-                    console.error("Failed to fetch exchange rate", e);
+                    console.error("Failed to fetch exchange rates", e);
                 }
             }
 
             function updatePrices(currency) {
-                const symbol = currency === 'USD' ? '$' : '€';
+                const symbols = { 'EUR': '€', 'USD': '$', 'GBP': '£', 'CNY': '¥' };
+                const symbol = symbols[currency] || '€';
+                const rate = currency === 'EUR' ? 1 : (exchangeRates[currency] || 1);
+                
+                // 1. Update all visual price values on the page
                 document.querySelectorAll('.price-val').forEach(el => {
                     const basePrice = parseFloat(el.getAttribute('data-base-price'));
-                    if (currency === 'USD') {
-                        el.textContent = (basePrice * exchangeRate).toFixed(2);
-                        if (el.nextSibling && el.nextSibling.nodeType === 3) {
-                            el.nextSibling.textContent = '$';
-                        }
-                    } else {
-                        el.textContent = basePrice.toFixed(2);
-                        if (el.nextSibling && el.nextSibling.nodeType === 3) {
-                            el.nextSibling.textContent = '€';
-                        }
+                    el.textContent = (basePrice * rate).toFixed(2);
+                    
+                    if (el.nextSibling && el.nextSibling.nodeType === 3) {
+                        el.nextSibling.textContent = symbol;
                     }
                 });
+
+                // 2. Update Snipcart "Add to Cart" buttons
+                document.querySelectorAll('.snipcart-add-item').forEach(btn => {
+                    const basePrice = parseFloat(btn.getAttribute('data-item-base-price'));
+                    const convertedPrice = (basePrice * rate).toFixed(2);
+                    btn.setAttribute('data-item-price', convertedPrice);
+                });
                 
-                // Sync with Snipcart
+                // 3. Update Snipcart Cart Currency
                 if (window.Snipcart) {
-                    Snipcart.api.cart.setCurrency(currency.toLowerCase());
+                    try {
+                        Snipcart.api.cart.setCurrency(currency.toLowerCase());
+                    } catch (e) {
+                        console.log("Snipcart setCurrency failed, likely not initialized yet");
+                    }
                 }
             }
 
             window.addEventListener('DOMContentLoaded', async () => {
-                await fetchRate();
+                await fetchRates();
                 const savedCurrency = localStorage.getItem('heurebleue_currency') || 'EUR';
                 
-                document.querySelectorAll('.currency-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const curr = btn.getAttribute('data-currency');
+                // delegate events since product pages might load differently
+                document.body.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('currency-btn')) {
+                        const curr = e.target.getAttribute('data-currency');
                         localStorage.setItem('heurebleue_currency', curr);
                         updatePrices(curr);
-                    });
+                    }
                 });
 
-                // Listen for Snipcart readiness to sync currency
                 document.addEventListener('snipcart.ready', () => {
                     const current = localStorage.getItem('heurebleue_currency') || 'EUR';
                     Snipcart.api.cart.setCurrency(current.toLowerCase());
                 });
 
-                if (savedCurrency === 'USD') {
-                    updatePrices('USD');
+                if (savedCurrency !== 'EUR') {
+                    updatePrices(savedCurrency);
                 }
             });
         })();

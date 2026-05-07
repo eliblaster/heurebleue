@@ -67,25 +67,6 @@ body {
             padding-left: 0.75rem;
             margin-left: 0.25rem;
         }
-
-        .currency-switcher {
-            display: flex;
-            align-items: center;
-            border-left: 1px solid rgba(255,255,255,0.3);
-            padding-left: 0.75rem;
-            margin-left: 0.25rem;
-            gap: 0.5rem;
-
-            .currency-btn {
-                font-size: 0.8rem;
-                color: $color-bg-light;
-                background: none;
-                border: none;
-                cursor: pointer;
-                padding: 0.25rem;
-                &:hover { color: $color-accent-tan; }
-            }
-        }
     }
 
     @media (min-width: 769px) {
@@ -126,23 +107,6 @@ body {
                     font-size: 1.25rem; /* Larger emoji for easier clicking */
                     padding: 0.5rem 0;
                     justify-content: center;
-                }
-            }
-
-            .currency-switcher {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                border-top: 1px solid rgba(255,255,255,0.3);
-                margin-top: 1rem;
-                padding-top: 1rem;
-
-                .currency-btn {
-                    font-size: 1rem;
-                    padding: 0.5rem 0;
-                    opacity: 0.7;
-                    transition: opacity 0.2s;
-                    &:hover { opacity: 1; }
                 }
             }
         }
@@ -310,12 +274,42 @@ header {
         }
     }
 
-    .product-details {
-        .price {
-            font-size: 2rem;
-            font-weight: bold;
-            color: $color-accent-deep;
+        .product-details {
+        .price-container {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
             margin: 1rem 0;
+
+            .price {
+                font-size: 2rem;
+                font-weight: bold;
+                color: $color-accent-deep;
+                margin: 0;
+            }
+
+            .currency-switcher {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.8rem;
+                color: $color-accent-tan;
+
+                .currency-btn {
+                    background: none;
+                    border: none;
+                    color: inherit;
+                    cursor: pointer;
+                    font-weight: bold;
+                    padding: 0;
+                    text-transform: uppercase;
+                    transition: color 0.2s;
+
+                    &:hover { color: $color-accent-deep; }
+                }
+                
+                .sep { opacity: 0.5; }
+            }
         }
 
         .description {

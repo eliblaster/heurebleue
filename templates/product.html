@@ -35,7 +35,18 @@
         
         <div class="product-details">
             <h1>{{ page.title }}</h1>
-            <p class="price"><span class="price-val" data-base-price="{{ page.extra.price }}">{{ page.extra.price }}</span>€</p>
+            <div class="price-container">
+                <p class="price"><span class="price-val" data-base-price="{{ page.extra.price }}">{{ page.extra.price }}</span>€</p>
+                <div class="currency-switcher">
+                    <button class="currency-btn" data-currency="EUR">EUR</button>
+                    <span class="sep">|</span>
+                    <button class="currency-btn" data-currency="USD">USD</button>
+                    <span class="sep">|</span>
+                    <button class="currency-btn" data-currency="GBP">GBP</button>
+                    <span class="sep">|</span>
+                    <button class="currency-btn" data-currency="CNY">CNY</button>
+                </div>
+            </div>
             
             <div class="description">
                 {{ page.content | safe }}
@@ -44,6 +55,7 @@
             <button class="snipcart-add-item"
                 data-item-id="{{ page.slug }}"
                 data-item-price="{{ page.extra.price }}"
+                data-item-base-price="{{ page.extra.price }}"
                 data-item-url="{{ page.permalink }}"
                 data-item-description="{{ page.content | striptags | trim | truncate(length=160) }}"
                 data-item-image="{{ page.extra.image | default(value=page.extra.images[0]) }}"
