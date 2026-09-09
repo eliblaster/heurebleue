@@ -2,6 +2,10 @@
 title = "Retro Color-Block Windbreaker"
 date = 2026-05-13
 description = "Vibrant 90s windbreaker with neon accents."
+[taxonomies]
+categories = ["clothes"]
+gender = ["men", "women"]
+vibe = ["day"]
 [extra]
 price = 80.00
 image = "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80"

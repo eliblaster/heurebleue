@@ -60,6 +60,40 @@ body {
             &:hover { color: $color-accent-tan; }
         }
 
+        .filter-trigger {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+            
+            .hamburger {
+                width: 18px;
+                height: 2px;
+                background: $color-bg-light;
+                position: relative;
+                &::before, &::after {
+                    content: '';
+                    position: absolute;
+                    width: 18px;
+                    height: 2px;
+                    background: inherit;
+                    left: 0;
+                }
+                &::before { top: -6px; }
+                &::after { top: 6px; }
+            }
+
+            @media (min-width: 769px) {
+                flex-direction: column;
+                .label-text {
+                    writing-mode: vertical-rl;
+                    text-orientation: mixed;
+                    transform: rotate(180deg);
+                    margin-top: 1rem;
+                }
+            }
+        }
+
         .lang-switcher {
             display: flex;
             align-items: center;
@@ -112,6 +146,73 @@ body {
         }
     }
 }
+
+/* Filter Drawer */
+.filter-drawer {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 300px;
+    height: 100vh;
+    background: #fff;
+    z-index: 1000;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.1);
+    transition: left 0.3s ease-in-out;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    color: $color-text-main;
+
+    .drawer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid $color-accent-tan;
+        padding-bottom: 1rem;
+
+        h3 { margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .close-drawer { font-size: 2rem; cursor: pointer; color: $color-accent-deep; }
+    }
+
+    .filter-section {
+        margin-bottom: 2rem;
+        
+        h4 { 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            color: $color-accent-deep; 
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .filter-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+
+            .filter-link {
+                text-decoration: none;
+                color: $color-text-main;
+                font-size: 1.1rem;
+                font-weight: bold;
+                transition: color 0.2s;
+                &:hover { color: $color-accent-gold; }
+            }
+        }
+    }
+}
+
+.filter-checkbox:checked ~ .filter-drawer {
+    left: 0;
+}
+
+/* Overlay when drawer is open */
+.filter-checkbox:checked ~ .site-wrapper {
+    filter: blur(2px);
+    pointer-events: none;
+}
+
 .site-wrapper {
     flex: 1;
     display: flex;
@@ -178,6 +279,74 @@ header {
         border-bottom: 2px solid $color-accent-tan;
         padding-bottom: 0.5rem;
         color: $color-text-main;
+    }
+}
+
+.shop-nav {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @media (max-width: 768px) {
+        padding: 0 1rem;
+        gap: 1rem;
+    }
+
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: $color-accent-deep;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+    }
+
+    .categories-list {
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+        -webkit-overflow-scrolling: touch;
+        &::-webkit-scrollbar { display: none; }
+
+        .category-item {
+            text-decoration: none;
+            color: $color-text-main;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            background: #fff;
+            white-space: nowrap;
+            border: 1px solid $color-accent-tan;
+            transition: all 0.2s;
+
+            &:hover {
+                background: $color-accent-tan;
+                color: white;
+            }
+
+            &.active {
+                background: $color-text-main;
+                color: white;
+                border-color: $color-text-main;
+            }
+        }
     }
 }
 

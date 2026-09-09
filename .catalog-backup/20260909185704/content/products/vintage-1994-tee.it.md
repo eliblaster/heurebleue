@@ -2,6 +2,10 @@
 title = "T-shirt Vintage World Cup 1994"
 date = 2026-05-06
 description = "Autentica t-shirt dei Mondiali USA 1994 in ottime condizioni."
+[taxonomies]
+categories = ["clothes"]
+gender = ["men", "women"]
+vibe = ["day"]
 [extra]
 price = 85.00
 images = [

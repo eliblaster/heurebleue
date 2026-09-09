@@ -2,6 +2,10 @@
 title = "Vintage 1994 World Cup Tee"
 date = 2026-05-06
 description = "Authentic 1994 USA World Cup single-stitch t-shirt in excellent condition."
+[taxonomies]
+categories = ["clothes"]
+gender = ["men", "women"]
+vibe = ["day"]
 [extra]
 price = 85.00
 images = [

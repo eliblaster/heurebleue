@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block content %}
+<section class="hero">
+    <h1>{{ taxonomy.name | capitalize }}</h1>
+</section>
+
+<section class="shop-nav">
+    <div class="filter-group">
+        <span class="filter-label">{{ trans(key="label_categories", lang=lang) }}:</span>
+        <div class="categories-list">
+            {% set categories = get_taxonomy(kind="categories") %}
+            {% for category in categories.items %}
+                <a href="{{ category.permalink }}" class="category-item">
+                    {{ trans(key="cat_" ~ category.name, lang=lang) }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="latest-arrivals">
+    <div class="product-grid">
+        {% for term in terms %}
+            <div class="product-card">
+                <a href="{{ term.permalink }}">
+                    <div class="card-image" style="display: flex; align-items: center; justify-content: center; height: 100%; background: #eee;">
+                         <h3 style="margin: 0;">{{ trans(key="cat_" ~ term.name, lang=lang) }}</h3>
+                    </div>
+                    <p style="text-align: center; padding: 1rem; margin: 0; font-weight: bold;">{{ term.pages | length }} Items</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}

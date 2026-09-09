@@ -2,6 +2,10 @@
 title = "Giacca di Jeans Oversize"
 date = 2026-05-10
 description = "Classica giacca di jeans anni '90 in lavaggio chiaro."
+[taxonomies]
+categories = ["clothes"]
+gender = ["men", "women"]
+vibe = ["day", "night"]
 [extra]
 price = 75.00
 image = "https://images.unsplash.com/photo-1576905341935-42022fed2e6d?auto=format&fit=crop&w=800&q=80"

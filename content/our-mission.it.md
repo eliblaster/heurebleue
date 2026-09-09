@@ -1,5 +1,5 @@
 +++
-title = "Chi Siamo - Heure Bleue"
+title = "La Nostra Missione"
 template = "index.html"
 +++
 

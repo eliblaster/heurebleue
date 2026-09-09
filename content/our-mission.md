@@ -1,5 +1,5 @@
 +++
-title = "About Our Family Vintage"
+title = "Our Mission"
 template = "index.html"
 +++
 

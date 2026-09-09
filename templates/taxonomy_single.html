@@ -1,45 +1,28 @@
-{% extends "base.html" %}
+{% extends "index.html" %}
 
 {% block content %}
-{% set current_item = section | default(value=page) %}
 <section class="hero">
-    <h1>{{ current_item.title }}</h1>
-    {{ current_item.content | safe }}
+    <h1>{{ trans(key="cat_" ~ term.name, lang=lang) }}</h1>
 </section>
-{% if section %}
-{% set products_path = "products/_index.md" %}
-{% if lang == "it" %}
-    {% set products_path = "products/_index.it.md" %}
-{% endif %}
 
-{% if section.path != "/" and section.path != "/it/" %}
 <section class="shop-nav">
     <div class="filter-group">
         <span class="filter-label">{{ trans(key="label_categories", lang=lang) }}:</span>
         <div class="categories-list">
             {% set categories = get_taxonomy(kind="categories") %}
             {% for category in categories.items %}
-                <a href="{{ category.permalink }}" class="category-item {% if term and term.name == category.name %}active{% endif %}">
+                <a href="{{ category.permalink }}" class="category-item {% if term.name == category.name %}active{% endif %}">
                     {{ trans(key="cat_" ~ category.name, lang=lang) }}
                 </a>
             {% endfor %}
         </div>
     </div>
 </section>
-{% endif %}
 
 <section class="latest-arrivals">
-    <h2>{% if term %}{{ trans(key="cat_" ~ term.name, lang=lang) }}{% else %}{{ trans(key="featured_items", lang=lang) }}{% endif %}</h2>
     <div class="product-grid">
-        {% set products_section = get_section(path=products_path) %}
-        
-        {% set display_pages = products_section.pages %}
-        {% if not section or section.path == "/" or section.path == "/it/" %}
-            {% set display_pages = display_pages | slice(end=4) %}
-        {% endif %}
-
-        {% if display_pages %}
-            {% for page in display_pages %}
+        {% if term.pages %}
+            {% for page in term.pages %}
                 <div class="product-card">
                     <a href="{{ page.permalink }}">
                         <div class="card-image">
@@ -61,5 +44,4 @@
         {% endif %}
     </div>
 </section>
-{% endif %}
 {% endblock content %}

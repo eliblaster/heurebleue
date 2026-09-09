@@ -53,11 +53,49 @@
         <nav class="ribbon-nav">
             <a href="{{ get_url(path="@/_index.md", lang=lang) }}" class="nav-item">{{ trans(key="home", lang=lang) }}</a>
             <a href="{{ get_url(path="@/products/_index.md", lang=lang) }}" class="nav-item">{{ trans(key="shop", lang=lang) }}</a>
+            
+            {% set is_shop = current_path is starting_with("/products/") or current_path is starting_with("/it/products/") or current_path is starting_with("/categories/") or current_path is starting_with("/it/categories/") or current_path is starting_with("/gender/") or current_path is starting_with("/it/gender/") or current_path is starting_with("/vibe/") or current_path is starting_with("/it/vibe/") %}
+            
+            {% if is_shop %}
+            <input type="checkbox" id="filter-toggle" class="filter-checkbox" hidden>
+            <label for="filter-toggle" class="nav-item filter-trigger">
+                <span class="hamburger"></span>
+                <span class="label-text">{{ trans(key="label_filters", lang=lang) }}</span>
+            </label>
+            
+            <div class="filter-drawer">
+                <div class="drawer-header">
+                    <h3>{{ trans(key="label_filters", lang=lang) }}</h3>
+                    <label for="filter-toggle" class="close-drawer">&times;</label>
+                </div>
+                <div class="drawer-content">
+                    <div class="filter-section">
+                        <h4>{{ trans(key="cat_men") | split(pat=" ") | first }} {{ trans(key="cat_women") | split(pat=" ") | first }} Gender</h4>
+                        <div class="filter-links">
+                            {% set genders = get_taxonomy(kind="gender") %}
+                            {% for g in genders.items %}
+                                <a href="{{ g.permalink }}" class="filter-link">{{ trans(key="cat_" ~ g.name, lang=lang) }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h4>☀️ 🌙 Vibe</h4>
+                        <div class="filter-links">
+                            {% set vibes = get_taxonomy(kind="vibe") %}
+                            {% for v in vibes.items %}
+                                <a href="{{ v.permalink }}" class="filter-link">{{ trans(key="cat_" ~ v.name, lang=lang) }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             <button class="snipcart-checkout nav-item">
                 {{ trans(key="cart", lang=lang) }} (<span class="snipcart-items-count">0</span>) - <span class="snipcart-total-price">0.00€</span>
             </button>
             <button class="snipcart-customer-signin nav-item">{{ trans(key="account", lang=lang) }}</button>
-            <a href="{{ get_url(path="@/about.md", lang=lang) }}" class="nav-item">{{ trans(key="about", lang=lang) }}</a>
+            <a href="{{ get_url(path="@/our-mission.md", lang=lang) }}" class="nav-item">{{ trans(key="our_mission", lang=lang) }}</a>
             
             <div class="lang-switcher">
                 {% set base_url_trimmed = config.base_url | trim_end_matches(pat="/") %}

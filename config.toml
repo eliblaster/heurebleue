@@ -8,15 +8,26 @@ compile_sass = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
 
+taxonomies = [
+    {name = "categories", feed = true},
+    {name = "gender", feed = true},
+    {name = "vibe", feed = true},
+]
+
 [languages.it]
 title = "Heure Bleue"
 description = "Curata selezione di abbigliamento anni '90 e collezionismo."
 generate_feeds = true
+taxonomies = [
+    {name = "categories", feed = true},
+    {name = "gender", feed = true},
+    {name = "vibe", feed = true},
+]
 
 [translations]
 home = "Home"
 shop = "Shop"
-about = "About"
+our_mission = "Our Mission"
 account = "Account"
 cart = "Cart"
 featured_items = "Featured Items"
@@ -24,11 +35,21 @@ products_soon = "Products coming soon..."
 back_to_shop = "Back to Shop"
 add_to_cart = "Add to Cart"
 shipping_notice = "✨ Free shipping on all vintage orders over 100€! ✨"
+label_categories = "Categories"
+label_filters = "Filters"
+cat_clothes = "Clothes"
+cat_shoe = "Shoe"
+cat_accessories = "Accessories"
+cat_jewelry = "Jewelry"
+cat_men = "♂ Men"
+cat_women = "♀ Women"
+cat_day = "☀️ Day"
+cat_night = "🌙 Night"
 
 [languages.it.translations]
 home = "Home"
 shop = "Negozio"
-about = "Chi Siamo"
+our_mission = "La Nostra Missione"
 account = "Account"
 cart = "Carrello"
 featured_items = "Articoli in Primo Piano"
@@ -36,6 +57,16 @@ products_soon = "Prodotti in arrivo..."
 back_to_shop = "Torna al Negozio"
 add_to_cart = "Aggiungi al carrello"
 shipping_notice = "✨ Spedizione gratuita su ordini vintage oltre i 100€! ✨"
+label_categories = "Categorie"
+label_filters = "Filtri"
+cat_clothes = "Abbigliamento"
+cat_shoe = "Scarpe"
+cat_accessories = "Accessori"
+cat_jewelry = "Gioielli"
+cat_men = "♂ Uomo"
+cat_women = "♀ Donna"
+cat_day = "☀️ Giorno"
+cat_night = "🌙 Notte"
 
 [markdown]
 
@@ -45,3 +76,4 @@ theme = "catppuccin-mocha"
 [extra]
 # Put all your custom variables here
 snipcart_api_key = "MWVkZDYzNzUtMDNkYS00YjljLTk3YmQtMDg5OWFjZGUxNzhkNjM5MTM2Njg2MzM2ODA2NzQ2"
+

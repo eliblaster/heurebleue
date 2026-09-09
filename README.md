@@ -39,7 +39,7 @@ The site is automatically deployed to GitHub Pages via GitHub Actions whenever c
 
 ## 📁 Project Structure
 
-- `content/`: Markdown files for products, about page, and homepage.
+- `content/`: Markdown files for products, our mission page, and homepage.
 - `sass/`: Custom SCSS styles including the brand palette.
 - `templates/`: Tera templates for site layout and product pages.
 - `static/`: Brand assets and logo.

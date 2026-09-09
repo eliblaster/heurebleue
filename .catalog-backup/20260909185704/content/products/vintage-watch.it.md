@@ -2,6 +2,10 @@
 title = "Orologio Meccanico Placcato Oro"
 date = 2026-05-14
 description = "Orologio meccanico vintage con cinturino in pelle classica."
+[taxonomies]
+categories = ["accessories"]
+gender = ["men"]
+vibe = ["day", "night"]
 [extra]
 price = 210.00
 image = "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=800&q=80"

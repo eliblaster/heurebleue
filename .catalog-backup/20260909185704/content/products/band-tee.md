@@ -2,6 +2,10 @@
 title = "90s Graphic Band Tee"
 date = 2026-05-12
 description = "Original grunge-era band t-shirt with faded graphics."
+[taxonomies]
+categories = ["clothes"]
+gender = ["men", "women"]
+vibe = ["day"]
 [extra]
 price = 55.00
 image = "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80"
